@@ -1,0 +1,7 @@
+com\golcutbarber\golcutbarberweb\JakartaRestConfiguration.class
+com\golcutbarber\golcutbarberweb\GolCutBarber.class
+com\golcutbarber\golcutbarberweb\PruebaConexion.class
+com\golcutbarber\golcutbarberweb\Conexion.class
+com\golcutbarber\golcutbarberweb\resources\JakartaEE10Resource.class
+com\golcutbarber\golcutbarberweb\CitaServlet.class
+com\golcutbarber\golcutbarberweb\UsuarioDAO.class

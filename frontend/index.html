@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gol Cut Barber - Gestión de Barberos</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-hover: #b8962e;
+      --dark-bg: #121212;
+      --card-bg: #1e1e1e;
+      --text-light: #f8f9fa;
+      --text-muted: #aaa;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Navbar elegante en dorado y negro */
+    .navbar-custom {
+      background-color: #0d0d0d;
+      border-bottom: 2px solid var(--gold-primary);
+    }
+    .navbar-brand-custom {
+      color: var(--gold-primary) !important;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-size: 1.5rem;
+    }
+
+    /* Tarjetas oscuras con bordes dorados */
+    .card-custom {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-header-custom {
+      background-color: #151515;
+      border-bottom: 1px solid var(--gold-primary);
+      color: var(--gold-primary);
+      font-weight: 600;
+      border-top-left-radius: 12px !important;
+      border-top-right-radius: 12px !important;
+    }
+
+    /* Inputs y Selects oscuros con enfoque dorado */
+    .form-control-custom, .form-select-custom {
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      color: #fff;
+    }
+    .form-control-custom:focus, .form-select-custom:focus {
+      background-color: #2a2a2a;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+      color: #fff;
+    }
+    .form-control-custom::placeholder {
+      color: #888;
+    }
+
+    /* Botones Dorados */
+    .btn-gold {
+      background-color: var(--gold-primary);
+      color: #000;
+      font-weight: 600;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+      background-color: var(--gold-hover);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    /* Tabla personalizada */
+    .table-custom {
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+    .table-custom thead {
+      background-color: #000;
+      color: var(--gold-primary);
+      border-bottom: 2px solid var(--gold-primary);
+    }
+    .table-custom tbody tr {
+      border-bottom: 1px solid #333;
+    }
+    .table-custom tbody tr:hover {
+      background-color: rgba(212, 175, 55, 0.05);
+    }
+
+    /* Badges de estado */
+    .badge-disponible {
+      background-color: #28a745;
+      color: #fff;
+    }
+    .badge-ocupado {
+      background-color: #ffc107;
+      color: #000;
+    }
+    .badge-inactivo {
+      background-color: #dc3545;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-custom mb-5 py-3">
+    <div class="container">
+      <a class="navbar-brand navbar-brand-custom" href="#">💈 GOL CUT BARBER</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <!-- FORMULARIO DE REGISTRO / EDICIÓN -->
+      <div class="col-md-5 mb-4">
+        <div class="card card-custom">
+          <div class="card-header card-header-custom py-3">
+            <h5 class="mb-0" id="form-title">✂️ Registrar Nuevo Barbero</h5>
+          </div>
+          <div class="card-body p-4">
+            <form id="barbero-form">
+              <input type="hidden" id="barbero-id">
+              
+              <div class="mb-3">
+                <label for="nombre" class="form-label fw-semibold text-light">Nombre Completo</label>
+                <input type="text" id="nombre" class="form-control form-control-custom" placeholder="Ej: Carlos Pérez" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="especialidad" class="form-label fw-semibold text-light">Especialidad</label>
+                <input type="text" id="especialidad" class="form-control form-control-custom" placeholder="Ej: Degradados, Barba, Taper Fade" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="telefono" class="form-label fw-semibold text-light">Teléfono</label>
+                <input type="tel" id="telefono" class="form-control form-control-custom" placeholder="Ej: 3001234567" pattern="[0-9]{10}" title="Debe ingresar un número de teléfono válido de 10 dígitos" required>
+              </div>
+
+              <div class="mb-4">
+                <label for="estado" class="form-label fw-semibold text-light">Estado</label>
+                <select id="estado" class="form-select form-select-custom">
+                  <option value="Disponible">Disponible</option>
+                  <option value="Ocupado">Ocupado</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-gold w-100 py-2 mb-2" id="btn-guardar">Guardar Barbero</button>
+              <button type="button" class="btn btn-outline-secondary w-100 py-2 d-none text-light" id="btn-cancelar">Cancelar Edición</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLA DE LISTADO DE BARBEROS -->
+      <div class="col-md-7">
+        <div class="card card-custom">
+          <div class="card-header card-header-custom py-3">
+            <h5 class="mb-0">📋 Lista de Barberos Registrados</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-custom align-middle">
+                <thead>
+                  <tr>
+                    <th class="py-3 ps-3">Nombre</th>
+                    <th class="py-3">Especialidad</th>
+                    <th class="py-3">Estado</th>
+                    <th class="py-3 text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-barberos">
+                  <!-- Carga dinámica -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api/barberos';
+
+    document.addEventListener('DOMContentLoaded', obtenerBarberos);
+
+    // Guardar o Actualizar Barbero
+    document.getElementById('barbero-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('barbero-id').value;
+      const datos = {
+        nombre: document.getElementById('nombre').value,
+        especialidad: document.getElementById('especialidad').value,
+        telefono: document.getElementById('telefono').value,
+        estado: document.getElementById('estado').value
+      };
+
+      try {
+        if (id) {
+          await fetch(`${API_URL}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+          });
+        } else {
+          await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+          });
+        }
+        limpiarFormulario();
+        obtenerBarberos();
+      } catch (err) {
+        console.error('Error al guardar:', err);
+      }
+    });
+
+    // Obtener todos los barberos desde la API
+    async function obtenerBarberos() {
+      try {
+        const res = await fetch(API_URL);
+        const barberos = await res.json();
+        const tbody = document.getElementById('tabla-barberos');
+        tbody.innerHTML = '';
+
+        if (barberos.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-muted">No hay barberos registrados aún</td></tr>';
+          return;
+        }
+
+        barberos.forEach(b => {
+          let badgeClass = 'badge-disponible';
+          if (b.estado === 'Ocupado') badgeClass = 'badge-ocupado';
+          if (b.estado === 'Inactivo') badgeClass = 'badge-inactivo';
+
+          tbody.innerHTML += `
+            <tr>
+              <td class="ps-3"><strong>${b.nombre}</strong><br><small style="color: #aaa">${b.telefono || ''}</small></td>
+              <td>${b.especialidad}</td>
+              <td><span class="badge ${badgeClass} p-2">${b.estado || 'Disponible'}</span></td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-warning me-1" onclick="editarBarbero('${b._id}', '${b.nombre}', '${b.especialidad}', '${b.telefono || ''}', '${b.estado || 'Disponible'}')">✏️</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="eliminarBarbero('${b._id}')">🗑️</button>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error('Error al obtener datos:', err);
+      }
+    }
+
+    // Editar Barbero
+    function editarBarbero(id, nombre, especialidad, telefono, estado) {
+      document.getElementById('barbero-id').value = id;
+      document.getElementById('nombre').value = nombre;
+      document.getElementById('especialidad').value = especialidad;
+      document.getElementById('telefono').value = telefono;
+      document.getElementById('estado').value = estado;
+      
+      document.getElementById('form-title').innerText = '✏️ Editar Barbero';
+      document.getElementById('btn-guardar').innerText = 'Actualizar Barbero';
+      document.getElementById('btn-cancelar').classList.remove('d-none');
+    }
+
+    // Eliminar Barbero
+    async function eliminarBarbero(id) {
+      if (confirm('¿Estás seguro de eliminar este barbero?')) {
+        try {
+          await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+          obtenerBarberos();
+        } catch (err) {
+          console.error('Error al eliminar:', err);
+        }
+      }
+    }
+
+    // Cancelar Edición
+    document.getElementById('btn-cancelar').addEventListener('click', limpiarFormulario);
+
+    function limpiarFormulario() {
+      document.getElementById('barbero-form').reset();
+      document.getElementById('barbero-id').value = '';
+      document.getElementById('form-title').innerText = '✂️ Registrar Nuevo Barbero';
+      document.getElementById('btn-guardar').innerText = 'Guardar Barbero';
+      document.getElementById('btn-cancelar').classList.add('d-none');
+    }
+  </script>
+</body>
+</html>

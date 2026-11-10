@@ -1,0 +1,17 @@
+====================================================================
+EVIDENCIA: GA7-220501096-AA3-EV02
+Módulos de software stand-alone, web y móvil codificados y probados
+PROGRAMA: Análisis y Desarrollo de Software (ADSO)
+APRENDIZ: Elkin Oswaldo Ramírez Álzate
+CENTRO: Centro Agroindustrial La Angostura - SENA
+====================================================================
+
+ENLACE AL REPOSITORIO DE CONTROL DE VERSIONES (GIT / GITHUB):
+
+https://github.com/elkin-dev26/GolCutBarberWeb
+
+--------------------------------------------------------------------
+Notas de la entrega:
+- Proyecto codificado en Frontend (React) y Backend (Node.js/Express).
+- Módulo probado: Gestión y Registro de Barberos.
+- Contiene estructura de validación de campos obligatorios y control de datos.

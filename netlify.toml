@@ -1,7 +1,7 @@
 ﻿[build]
-  base = "gol-cut-barber-frontend"
+  base = "Interfaz"
   command = "npm run build"
-  publish = "gol-cut-barber-frontend/dist"
+  publish = "Interfaz/dist"
 
 [[redirects]]
   from = "/*"
